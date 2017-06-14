@@ -1,0 +1,46 @@
+using UnityEngine;
+using System.Collections;
+
+public class NewBehaviourScript : MonoBehaviour {
+    public enum PlayerStates
+    {
+        Idle = 0,
+        left,
+        right,
+        jump,
+        landing,
+        falling,
+        kill,
+        resurrect,
+    }
+    public delegate void PlayerStateHandler(PlayerStateController.PlayerStatenewState);
+    public static event PlayerStateHandleronStateChange;
+    void LateUpdate()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        if (horizontal != 0f)
+        {
+            if(horizontal < 0f)
+            {
+                if (onStateChange != null) onStateChange(PlayerStateController.playerStates.left);
+            }
+            else
+            {
+                if (onStateChange != null) onStateChange(PlayerStateController.playerStates.right);
+            }
+        }
+        else
+        {
+            if (onStateChange != null) onStateChange(PlayerStateController.playerStates.idle);
+        }
+    }
+	// Use this for initialization
+	void Start () {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+}
