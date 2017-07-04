@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*
+
+GameVersion 0.0.1v
+
+HUD Controller for the project SteamDrafters
+Script pure and commented for undestading pourposes
+
+Controlador e HUD provisório para o projeto SteamDrafters
+Script puro com comentários
+
+pt-br|english
+
+*/
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -16,7 +29,7 @@ public class xboxtacontroller : MonoBehaviour
     bool ShowPopup = false;
     KeyCode PreviousKey;
 
-    void setDefaultvalues()
+    void setDefaultvalues() // Esquema dos controles | Control scheme
     {
         ControlScheme = "Scheme A";
         if (!isControllerConnected)
@@ -86,7 +99,7 @@ public class xboxtacontroller : MonoBehaviour
             orig_xPause = xPause;
         }
     }
-    void DetectController()
+    void DetectController() // Função para checar se existe um "gamepad" conectado | "is gamepad connected?" function
     {
         try
         {
@@ -106,15 +119,15 @@ public class xboxtacontroller : MonoBehaviour
             isControllerConnected = false;
         }
     }
-    void IdentifyController()
+    void IdentifyController() // Função Identificadora do "gamepad" | gamepad identifier funtion 
     {
         Controller = Input.GetJoystickNames()[0];
     }
-    void SwitchProfile(ControllerProfile Switcher)
+    void SwitchProfile(ControllerProfile Switcher) // Função que troca o profile do controlador de PC para controle(xbox - mapeado,ps4 - não mapeado,..) | Profile switcher function from pc to controller (xbox - mapped,ps4 - un-mapped,..)
     {
         cProfile = Switcher;
     }
-    void setNewKey(KeyCode KeyToSet, KeyCode SetTo)
+    void setNewKey(KeyCode KeyToSet, KeyCode SetTo) // Função de case switch de keys para ciclamento entre controles | Case switch function for key cycling
     {
         switch (KeyToSet)
         {
@@ -148,7 +161,7 @@ public class xboxtacontroller : MonoBehaviour
                 break;
         }
     }
-    string SetString(string SetTo)
+    string SetString(string SetTo)// case switch para variáves string | String variables case switcher function
     {
         switch (SetTo)
         {
@@ -180,7 +193,7 @@ public class xboxtacontroller : MonoBehaviour
         return SetTo;
     }
 
-    void SwitchControlScheme(string Scheme)
+    void SwitchControlScheme(string Scheme)// Função de troca entre esquemas preset | Preset switcher function
     {
         switch (Scheme)
         {
@@ -242,13 +255,13 @@ public class xboxtacontroller : MonoBehaviour
                 break;
         }
     }
-    void Reset()
+    void Reset() // Função de reset do mapeamento, display e esquema dos controles para os valores default | Mapping, display and control scheme reset function to default values
     {
         setDefaultvalues();
         ShowPopup = false;
         PreviousKey = KeyCode.None;
     }
-    void OnGUI()
+    void OnGUI() // Menu gráfico de mapeamento, customização e display dos controles | Mapping, customization and control display GUI
     {
         if (!ShowPopup)
         {
@@ -264,8 +277,14 @@ public class xboxtacontroller : MonoBehaviour
             GUI.Label(new Rect(25, 100, 125, 20), "Rotation: ");
             GUI.Button(new Rect(150, 100, 135, 20), PC_Rotate);
             GUI.Button(new Rect(325, 100, 135, 20), Xbox_Rotate);
+	/* 
+	Menu com condições para customização para os controles:
+	PC_Item1,PC_Item2,PC_Item3,PC_Inv,Xbox_Inv,PC_Pause,Xbox_Pause
 
-            GUI.Label(new Rect(25, 125, 125, 20), "Item 1:");
+	Case menu for the following control customization:
+	PC_Item1,PC_Item2,PC_Item3,PC_Inv,Xbox_Inv,PC_Pause,Xbox_Pause
+	*/
+            GUI.Label(new Rect(25, 125, 125, 20), "Item 1:"); 
             if (GUI.Button(new Rect(150, 125, 135, 20), PC_Item1))
             {
                 ShowPopup = true;
@@ -322,7 +341,7 @@ public class xboxtacontroller : MonoBehaviour
             GUI.Button(new Rect(325, 275, 135, 20), Xbox_Aim);
 
             GUI.Label(new Rect(450, 345, 125, 20), "Current Controls: ");
-            if (GUI.Button(new Rect(425, 370, 135, 20), cProfile.ToString()))
+            if (GUI.Button(new Rect(425, 370, 135, 20), cProfile.ToString()))// Switcher e display atual do profile dos controles | Actual control profile and display switcher
             {
                 if (cProfile == ControllerProfile.Controller)
                 {
@@ -334,7 +353,7 @@ public class xboxtacontroller : MonoBehaviour
                 }
             }
             GUI.Label(new Rect(15, 345, 125, 20), "Current Control Scheme");
-            if (GUI.Button(new Rect(25, 370, 135, 20), ControlScheme))
+            if (GUI.Button(new Rect(25, 370, 135, 20), ControlScheme))// Switcher e display do preset do esquema de controles | Actual control preset and scheme switcher
             {
                 if (ControlScheme == "Scheme A")
                 {
@@ -347,13 +366,13 @@ public class xboxtacontroller : MonoBehaviour
                     ControlScheme = "Scheme A";
                 }
             }
-            if (GUI.Button(new Rect(230, 370, 135, 20), "Reset Controls"))
+            if (GUI.Button(new Rect(230, 370, 135, 20), "Reset Controls")) // Reset do mapeamento e esquema para os valores default | Control mapping and scheme default reset switcher 
             {
                 Reset();
             }
             GUI.EndGroup();
         }
-        else
+        else // Menu condicional final para troca de controles | Final case control switcher
         {
             GUI.BeginGroup(new Rect(Screen.width / 2 - 300, Screen.height / 2 - 300, 600, 400));
             GUI.Box(new Rect(0, 0, 600, 400), "Pick A Control to Switch");
